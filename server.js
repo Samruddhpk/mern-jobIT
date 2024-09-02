@@ -13,6 +13,7 @@ import { authenticateUser } from "./middlewares/authMiddleware.js";
 
 import jobsRouter from "./routes/jobRoutes.js";
 import authRouter from "./routes/authRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 
 // middlewares
 app.use(express.json());
@@ -25,9 +26,9 @@ app.get("/", (req, res) => {
     res.status(200).send('<a href="/api/v1/jobs">Jobs</a>');
 });
 
-app.use("/api/v1/jobs", authenticateUser, jobsRouter);
 app.use("/api/v1/auth", authRouter);
-
+app.use("/api/v1/jobs", authenticateUser, jobsRouter);
+app.use("/api/v1/users", authenticateUser, userRouter);
 
 
 app.use("*", (req, res) => {
