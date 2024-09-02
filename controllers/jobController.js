@@ -1,73 +1,66 @@
-import { nanoid } from "nanoid";
+import { StatusCodes } from "http-status-codes";
+import { NotFoundError } from "../errors/customError.js";
+
+import Job from "../models/Job.js";
 
 
-let jobs = [
-    { id: nanoid(), company: 'apple', position: 'front-end' },
-    { id: nanoid(), company: 'google', position: 'back-end' },
-];
 
 
 // get all jobs
-const getAllJobs = (req, res) => {
-    res.status(200).json({ jobs });
+const getAllJobs = async (req, res) => {
+    const jobs = await Job.find({});
+    res.status(StatusCodes.OK).json({ jobs });
 };
 
 // create 
-const createJob = (req, res) => {
+const createJob = async (req, res) => {
     const { company, position } = req.body;
     if (!company || !position) {
         return req.status(400).json({ msg: "please provide company & position" });
     }
-    const id = nanoid(10);
-    const job = { id, company, position };
-    jobs.push(job);
-    res.status(200).json({ job });
-
+    const job = await Job.create({ company, position });
+    res.status(StatusCodes.CREATED).json({ job });
 };
 
 // get single job
-const getSingleJob = (req, res) => {
+const getSingleJob = async (req, res) => {
     const { id } = req.params;
-    const job = jobs.find((job) => job.id === id);
+    const job = await Job.findById(id);
 
     if (!job) {
-        return res.status(404).json({ msg: `no job with id ${id}` });
+        throw new NotFoundError(`no job with id ${id}`);
     }
 
-    res.status(200).json({ job });
+    res.status(StatusCodes.OK).json({ job });
 };
 
 // update job
-const updateJob = (req, res) => {
+const updateJob = async (req, res) => {
     const { company, position } = req.body;
     if (!company || !position) {
         return res.status(400).json({ msg: 'please provide values' });
     }
 
     const { id } = req.params;
-    const job = jobs.find((job) => job.id === id);
+    const job = await Job.findByIdAndUpdate(id, req.body, { new: true });
 
     if (!job) {
         return res.status(404).json({ msg: `no job with id ${id}` });
     }
-
-    job.company = company;
-    job.position = position;
-    res.status(200).json({ msg: 'job modified', job });
+    res.status(StatusCodes.OK).json({ msg: 'job updated', job });
 };
 
 
 // delete job
-const deleteJob = (req, res) => {
+const deleteJob = async (req, res) => {
     const { id } = req.params;
-    const job = jobs.find((job) => job.id === id);
+    const job = await Job.findByIdAndDelete(id);
     if (!job) {
         return res.status(400).json({ msg: `no job with id ${id}` });
     }
 
-    const newJobs = jobs.filter((job) => job.id !== id);
-    jobs = newJobs;
-    res.status(200).json({ msg: 'job deleted' });
+
+    res.status(StatusCodes.OK).json({ msg: 'job deleted', job });
 };
 
 
