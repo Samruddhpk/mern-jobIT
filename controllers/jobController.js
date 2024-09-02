@@ -1,9 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { NotFoundError } from "../errors/customError.js";
-
-import Job from "../models/Job.js";
-
-
+import Job from "../models/JobModel.js";
 
 
 // get all jobs

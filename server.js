@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 // local imports
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
 import jobsRouter from "./routes/jobRoutes.js";
+import authRouter from "./routes/authRoutes.js";
 
 // middlewares
 app.use(express.json());
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/jobs", jobsRouter);
+app.use("/api/v1/auth", authRouter);
 
 
 app.use("*", (req, res) => {
