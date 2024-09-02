@@ -14,12 +14,12 @@ const register = async (req, res) => {
     const hashedPassword = await hashPassword(req.body.password);
     req.body.password = hashedPassword;
 
-    // jwt
-    const token = createJWT({ userId: user._id, role: user.role });
-    console.log(token);
 
 
     const user = await User.create(req.body);
+    // jwt
+    const token = createJWT({ userId: user._id, role: user.role });
+    console.log(token);
 
     // httpOnly-cookie
     const oneDay = 1000 * 60 * 60 * 24;
@@ -68,4 +68,14 @@ const login = async (req, res) => {
 
 };
 
-export { login, register };
+
+const logout = (req, res) => {
+    res.cookie("token", "logout", {
+        httpOnly: true,
+        expires: new Date(Date.now())
+    });
+    res.status(StatusCodes.OK).json({ msg: "user logged out" });
+};
+
+
+export { login, register, logout };

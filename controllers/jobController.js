@@ -5,17 +5,14 @@ import Job from "../models/JobModel.js";
 // get all jobs
 const getAllJobs = async (req, res) => {
     console.log(req);
-    const jobs = await Job.find({});
+    const jobs = await Job.find({ createdBy: req.user.userId });
     res.status(StatusCodes.OK).json({ jobs });
 };
 
 // create 
 const createJob = async (req, res) => {
-    const { company, position } = req.body;
-    if (!company || !position) {
-        return req.status(400).json({ msg: "please provide company & position" });
-    }
-    const job = await Job.create({ company, position });
+    req.body.createdBy = req.user.userId;
+    const job = await Job.create(req.body);
     res.status(StatusCodes.CREATED).json({ job });
 };
 
