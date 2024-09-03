@@ -4,6 +4,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { DashboardLayout, Error, HomeLayout, Landing, Login, Register, AddJob, Admin, AllJobs, Profile, Stats } from "./pages";
 
 
+// actions
+import { action as registerAction } from "./pages/Register";
+import { action as loginAction } from "./pages/Login";
+
 // check theme
 
 const checkDefaultTheme = () => {
@@ -26,11 +30,13 @@ const router = createBrowserRouter([
 
       {
         path: "register",
-        element: <Register />
+        element: <Register />,
+        action: registerAction,
       },
       {
         path: "login",
-        element: <Login />
+        element: <Login />,
+        action: loginAction,
       },
       {
         path: "dashboard",
