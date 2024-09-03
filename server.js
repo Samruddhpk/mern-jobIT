@@ -6,6 +6,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 // local imports
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
@@ -18,6 +19,7 @@ import userRouter from "./routes/userRoutes.js";
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 if (process.env.NODE_ENV === "development") {
     app.use(morgan('dev'));
 }
@@ -25,6 +27,11 @@ if (process.env.NODE_ENV === "development") {
 app.get("/", (req, res) => {
     res.status(200).send('<a href="/api/v1/jobs">Jobs</a>');
 });
+
+app.get("/api/v1/test", (req, res) => {
+    res.json({ msg: 'test route' });
+});
+
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticateUser, jobsRouter);
