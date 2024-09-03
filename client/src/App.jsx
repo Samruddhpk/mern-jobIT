@@ -7,6 +7,7 @@ import { DashboardLayout, Error, HomeLayout, Landing, Login, Register, AddJob, A
 // actions
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
+import { action as addJobAction } from "./pages/AddJob";
 
 // loaders
 import { loader as dashboardLoader } from "./pages/DashboardLayout";
@@ -48,7 +49,8 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <AddJob />
+            element: <AddJob />,
+            action: addJobAction,
           },
           {
             path: "all-jobs",

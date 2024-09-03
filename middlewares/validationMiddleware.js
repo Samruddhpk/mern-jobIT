@@ -30,13 +30,18 @@ const withValidationErrors = (validateValues) => {
 
 
 
-// TODO: Test location input - default as "my city"
-export const validateJobInput = withValidationErrors([body('company').notEmpty().withMessage('company is required'),
-body('position').notEmpty().withMessage("position is required"),
-body('jobLocation').notEmpty().withMessage('job location is required'),
-body('jobStatus').isIn(Object.values(JOB_STATUS)).withMessage('invalid status value'),
-body('jobType').isIn(Object.values(JOB_TYPE)).withMessage('invalid job type')
+export const validateJobInput = withValidationErrors([
+    body('company').notEmpty().withMessage('company is required'),
+    body('position').notEmpty().withMessage('position is required'),
+    body('jobLocation').notEmpty().withMessage('job location is required'),
+    body('jobStatus')
+        .isIn(Object.values(JOB_STATUS))
+        .withMessage('invalid status value'),
+    body('jobType')
+        .isIn(Object.values(JOB_TYPE))
+        .withMessage('invalid type value'),
 ]);
+
 
 
 // check for id in params
