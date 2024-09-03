@@ -10,6 +10,7 @@ import { action as loginAction } from "./pages/Login";
 import { action as addJobAction } from "./pages/AddJob";
 import { action as editJobAction } from "./pages/EditJob";
 import { action as deleteJobAction } from "./pages/DeleteJob";
+import { action as profileAction } from "./pages/Profile";
 
 // loaders
 import { loader as dashboardLoader } from "./pages/DashboardLayout";
@@ -64,7 +65,8 @@ const router = createBrowserRouter([
           },
           {
             path: "profile",
-            element: <Profile />
+            element: <Profile />,
+            action: profileAction,
           },
           {
             path: "stats",

@@ -7,6 +7,14 @@ dotenv.config();
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import cloudinary from "cloudinary";
+
+
+
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
+
 
 // local imports
 import errorHandlerMiddleware from "./middlewares/errorHandlerMiddleware.js";
@@ -16,13 +24,25 @@ import jobsRouter from "./routes/jobRoutes.js";
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 
+
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET
+});
+
 // middlewares
-app.use(express.json());
-app.use(cookieParser());
-app.use(cors());
 if (process.env.NODE_ENV === "development") {
     app.use(morgan('dev'));
 }
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+app.use(express.static(path.resolve(__dirname, './public')));
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors());
+
+
 
 app.get("/", (req, res) => {
     res.status(200).send('<a href="/api/v1/jobs">Jobs</a>');
