@@ -8,6 +8,9 @@ import { DashboardLayout, Error, HomeLayout, Landing, Login, Register, AddJob, A
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
 
+// loaders
+import { loader as dashboardLoader } from "./pages/DashboardLayout";
+
 // check theme
 
 const checkDefaultTheme = () => {
@@ -41,6 +44,7 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <DashboardLayout isDarkThemeEnabled={isDarkThemeEnabled} />,
+        loader: dashboardLoader,
         children: [
           {
             index: true,
