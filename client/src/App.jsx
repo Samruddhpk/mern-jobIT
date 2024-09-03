@@ -1,16 +1,20 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // imports
-import { DashboardLayout, Error, HomeLayout, Landing, Login, Register, AddJob, Admin, AllJobs, Profile, Stats } from "./pages";
+import { DashboardLayout, Error, HomeLayout, Landing, Login, Register, AddJob, Admin, AllJobs, Profile, Stats, EditJob } from "./pages";
 
 
 // actions
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
 import { action as addJobAction } from "./pages/AddJob";
+import { action as editJobAction } from "./pages/EditJob";
+import { action as deleteJobAction } from "./pages/DeleteJob";
 
 // loaders
 import { loader as dashboardLoader } from "./pages/DashboardLayout";
+import { loader as allJobsLoader } from "./pages/AllJobs";
+import { loader as editJobLoader } from "./pages/EditJob";
 
 // check theme
 
@@ -54,7 +58,8 @@ const router = createBrowserRouter([
           },
           {
             path: "all-jobs",
-            element: <AllJobs />
+            element: <AllJobs />,
+            loader: allJobsLoader,
           },
           {
             path: "profile",
@@ -63,7 +68,17 @@ const router = createBrowserRouter([
           {
             path: "stats",
             element: <Stats />
-          }
+          },
+          {
+            path: 'edit-job/:id',
+            element: <EditJob />,
+            loader: editJobLoader,
+            action: editJobAction,
+          },
+          {
+            path: 'delete-job/:id',
+            action: deleteJobAction,
+          },
         ]
       },
     ]
