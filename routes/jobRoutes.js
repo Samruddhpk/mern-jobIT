@@ -6,9 +6,10 @@ import { getAllJobs, getSingleJob, createJob, updateJob, deleteJob } from "../co
 
 // middlewares
 import { validateJobInput, validIdParam } from "../middlewares/validationMiddleware.js";
+import { checkForTestUser } from "../middlewares/authMiddleware.js";
 
-router.route("/").get(getAllJobs).post(validateJobInput, createJob);
-router.route("/:id").get(validIdParam, getSingleJob).patch(validIdParam, validateJobInput, updateJob).delete(validIdParam, deleteJob);
+router.route("/").get(getAllJobs).post(checkForTestUser, validateJobInput, createJob);
+router.route("/:id").get(validIdParam, getSingleJob).patch(checkForTestUser, validIdParam, validateJobInput, updateJob).delete(checkForTestUser, validIdParam, deleteJob);
 
 
 export default router;
