@@ -4,6 +4,7 @@ import { BigSidebar, Navbar, SmallSidebar } from "../components";
 import { useState, createContext, useContext } from "react";
 import customFetch from "../utils/customFetch";
 import { toast } from "react-toastify";
+import { checkDefaultTheme } from '../App';
 
 export const loader = async () => {
     try {
@@ -27,7 +28,7 @@ const DashboardLayout = ({ isDarkThemeEnabled }) => {
 
     const { user } = useLoaderData();
     const [showSidebar, setShowSidebar] = useState(false);
-    const [isDarkTheme, setIsDarkTheme] = useState(isDarkThemeEnabled);
+    const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme());
 
     const toggleDarkTheme = () => {
         const newDarkTheme = !isDarkTheme;

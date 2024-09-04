@@ -20,14 +20,13 @@ import { loader as adminLoader } from "./pages/Admin";
 import { loader as statsLoader } from "./pages/Stats";
 
 // check theme
-
-const checkDefaultTheme = () => {
-  const isDarkTheme = localStorage.getItem('darkTheme') === true;
+export const checkDefaultTheme = () => {
+  const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
   document.body.classList.toggle('dark-theme', isDarkTheme);
   return isDarkTheme;
 };
 
-const isDarkThemeEnabled = checkDefaultTheme();
+checkDefaultTheme();
 
 
 const router = createBrowserRouter([
@@ -51,7 +50,7 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: <DashboardLayout isDarkThemeEnabled={isDarkThemeEnabled} />,
+        element: <DashboardLayout />,
         loader: dashboardLoader,
         children: [
           {
