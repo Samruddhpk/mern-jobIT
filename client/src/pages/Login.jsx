@@ -1,5 +1,5 @@
 import { Link, Form, redirect, useNavigation, useNavigate } from "react-router-dom";
-import { FormRow, Logo } from "../components";
+import { FormRow, Logo, SubmitBtn } from "../components";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import customFetch from "../utils/customFetch";
 import { toast } from "react-toastify";
@@ -42,11 +42,9 @@ const Login = () => {
             <Form className="form" method="post">
                 <Logo />
                 <h4>Login</h4>
-                <FormRow type="email" name="email" defaultValue="john@gmail.com" />
+                <FormRow type="email" name="email" defaultValue="Sam@gmail.com" />
                 <FormRow type="password" name="password" defaultValue="secret123" />
-                <button type="submit" className="btn btn-block" disabled={isSubmitting}>
-                    {isSubmitting ? "logging in..." : "login"}
-                </button>
+                <SubmitBtn />
                 <button type="button" className="btn btn-block" onClick={loginDemoUser}>explore the app</button>
                 <p>Not a member yet?  <Link to="/register">Register</Link> </p>
 
