@@ -17,9 +17,11 @@ const getAllJobs = async (req, res) => {
             { company: { $regex: search, $options: "i" } }
         ];
     }
+
     if (jobStatus && jobStatus !== "all") {
         queryObject.jobStatus = jobStatus;
     }
+
     if (jobType && jobType !== "all") {
         queryObject.jobType = jobType;
     }
@@ -61,11 +63,6 @@ const getSingleJob = async (req, res) => {
 
 // update job
 const updateJob = async (req, res) => {
-    const { company, position } = req.body;
-    if (!company || !position) {
-        return res.status(400).json({ msg: 'please provide values' });
-    }
-
     const { id } = req.params;
     const job = await Job.findByIdAndUpdate(id, req.body, { new: true });
     res.status(StatusCodes.OK).json({ msg: 'job updated', job });
@@ -81,7 +78,7 @@ const deleteJob = async (req, res) => {
 
 
 //stats
-export const showStats = async (req, res) => {
+const showStats = async (req, res) => {
     let stats = await Job.aggregate([
         { $match: { createdBy: new mongoose.Types.ObjectId(req.user.userId) } },
         { $group: { _id: '$jobStatus', count: { $sum: 1 } } },
@@ -130,4 +127,4 @@ export const showStats = async (req, res) => {
     res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
 };
 
-export { getAllJobs, getSingleJob, createJob, updateJob, deleteJob };
+export { getAllJobs, getSingleJob, createJob, updateJob, deleteJob, showStats };
